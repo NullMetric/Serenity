@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serenity | Mental Health Companion</title>
+  <meta name="description" content="Serenity is a calming mental wellness web app with mood tracking, guided exercises, journaling, and Gemini-powered support chat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">Seren<span>ity</span></div>
+    <div class="logo-sub">Mental Wellness Companion</div>
+
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <button class="nav-item active" data-section="dashboard"><span class="icon">◈</span><span>Dashboard</span></button>
+      <button class="nav-item" data-section="chat"><span class="icon">◎</span><span>AI Chat</span></button>
+      <button class="nav-item" data-section="journal"><span class="icon">◇</span><span>Journal</span></button>
+      <button class="nav-item" data-section="exercises"><span class="icon">⊙</span><span>Exercises</span></button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Platform</div>
+      <button class="nav-item" data-section="about"><span class="icon">⊛</span><span>Launch Notes</span></button>
+    </div>
+
+    <div class="model-status">
+      <div class="model-status-label">AI Status</div>
+      <div class="model-status-row">
+        <span class="model-name" id="sidebar-model-name">Gemini Support</span>
+        <span class="status-dot disconnected" id="status-dot"></span>
+      </div>
+      <div class="model-sub" id="sidebar-model-sub">Checking connection...</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title" id="page-title">Good day</div>
+        <div class="page-sub" id="page-sub">How are you feeling right now?</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" id="open-journal-btn">Open Journal</button>
+        <button class="btn btn-primary" id="start-session-btn">Start Session</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <section class="banner" id="crisis-banner" hidden>
+        <strong>Immediate support matters.</strong>
+        <span>If you may be in danger or thinking about self-harm, contact emergency services now. In the U.S. or Canada, call or text 988.</span>
+      </section>
+
+      <section id="section-dashboard">
+        <div class="checkin-card">
+          <div class="checkin-label">Daily Check-in</div>
+          <div class="checkin-title">How would you describe your current emotional state?</div>
+          <div class="mood-row" id="mood-buttons"></div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">Mood Score</div>
+            <div class="stat-number" id="stat-mood-score">0.0</div>
+            <div class="stat-label">latest check-in</div>
+            <div class="stat-change neutral">Track daily to see patterns</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Streak</div>
+            <div class="stat-number" id="stat-streak">0</div>
+            <div class="stat-label">days checking in</div>
+            <div class="stat-change neutral">Consistency builds insight</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Sessions This Week</div>
+            <div class="stat-number" id="stat-sessions">0</div>
+            <div class="stat-label">support chats</div>
+            <div class="stat-change neutral">Use chat whenever you need it</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">7-Day Mood Trend</div>
+            <div class="mini-chart">
+              <div class="chart-bars" id="mood-chart"></div>
+              <div class="chart-days" id="chart-days"></div>
+            </div>
+            <div class="insights-wrap" id="trend-pills"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">AI Insights</div>
+            <div class="insight-text" id="ai-insights">Start with a mood check-in or journal entry to unlock insights.</div>
+            <button class="btn btn-ghost full-width" id="refresh-insights-btn">Refresh Insights</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Quick Chat</div>
+            <div class="chat-container short">
+              <div class="chat-messages" id="chat-messages-main"></div>
+              <div class="chat-input-row">
+                <textarea class="chat-input" id="chat-input-main" rows="1" placeholder="Share what's on your mind..."></textarea>
+                <button class="send-btn" data-chat="main" aria-label="Send message">
+                  <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9"></polygon></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Resources</div>
+            <div class="resource-list">
+              <button class="resource-item" data-resource="breathing">
+                <div class="resource-icon">🌬️</div>
+                <div><div class="resource-title">Breathing Exercise</div><div class="resource-sub">4-7-8 calming rhythm</div></div>
+                <div class="resource-arrow">›</div>
+              </button>
+              <button class="resource-item" data-resource="grounding">
+                <div class="resource-icon">🌱</div>
+                <div><div class="resource-title">Grounding Technique</div><div class="resource-sub">5-4-3-2-1 sensory reset</div></div>
+                <div class="resource-arrow">›</div>
+              </button>
+              <button class="resource-item" data-resource="journal">
+                <div class="resource-icon">📓</div>
+                <div><div class="resource-title">Daily Journal</div><div class="resource-sub">Reflect and release your thoughts</div></div>
+                <div class="resource-arrow">›</div>
+              </button>
+              <div class="resource-item static-item">
+                <div class="resource-icon">📞</div>
+                <div><div class="resource-title">Crisis Support</div><div class="resource-sub">Emergency help and trusted support</div></div>
+                <div class="resource-arrow">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-chat" hidden>
+        <div class="card wide-card">
+          <div class="card-title">AI Support Session</div>
+          <div class="support-note">Serenity focuses only on mental wellness, emotional support, coping strategies, journaling, and guided exercises.</div>
+          <div class="chat-container tall">
+            <div class="chat-messages" id="chat-messages-full"></div>
+            <div class="chat-input-row">
+              <textarea class="chat-input" id="chat-input-full" rows="1" placeholder="Talk through what you're feeling..."></textarea>
+              <button class="send-btn" data-chat="full" aria-label="Send message">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9"></polygon></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-journal" hidden>
+        <div class="card journal-card">
+          <div class="card-title">Today's Journal</div>
+          <textarea class="journal-area" id="journal-text" placeholder="Write freely. What happened today, what are you feeling, and what do you need most right now?"></textarea>
+          <div class="journal-actions">
+            <span class="journal-hint" id="journal-hint">Start writing to see your word count.</span>
+            <div class="button-row">
+              <button class="btn btn-ghost" id="analyze-journal-btn">Analyze Mood</button>
+              <button class="btn btn-primary" id="save-journal-btn">Save Entry</button>
+            </div>
+          </div>
+          <div class="analysis-box" id="journal-analysis" hidden></div>
+        </div>
+      </section>
+
+      <section id="section-exercises" hidden>
+        <div class="grid-3">
+          <div class="card center-card">
+            <div class="card-title">Breathing Exercise</div>
+            <div class="breathe-ring" id="breathe-ring"><span class="breathe-text" id="breathe-text">Ready</span></div>
+            <div class="breathe-caption" id="breathe-caption">Click start to begin.</div>
+            <button class="btn btn-primary full-width" id="breathe-btn">Start</button>
+          </div>
+
+          <div class="card">
+            <div class="card-title">5-4-3-2-1 Grounding</div>
+            <div class="exercise-list" id="grounding-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Supportive Reminder</div>
+            <div class="exercise-copy">
+              You do not need to fix everything at once. A good next step is often small: one breath, one glass of water, one honest journal sentence, or one kind message to someone safe.
+            </div>
+            <div class="exercise-copy muted">Serenity helps with gentle self-support, but it does not replace a licensed professional or crisis service.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-about" hidden>
+        <div class="card wide-card">
+          <div class="card-title">Launch Readiness</div>
+          <div class="launch-grid">
+            <div>
+              <h3>What's included</h3>
+              <p>Mood tracking, journaling, guided exercises, persistent data storage, and Gemini-powered support chat with mental-health-only prompt guardrails.</p>
+            </div>
+            <div>
+              <h3>How the key works</h3>
+              <p>Your Gemini API key stays on the server in <code>.env</code> as <code>GEMINI_API_KEY</code>. It is not stored in the browser UI.</p>
+            </div>
+            <div>
+              <h3>Deploy anywhere</h3>
+              <p>Use <code>npm start</code> on Render, Railway, Fly.io, or a VPS. Set the environment variables in your host dashboard.</p>
+            </div>
+            <div>
+              <h3>Safety stance</h3>
+              <p>The chatbot avoids unrelated topics, does not diagnose, and escalates immediate-risk language to emergency guidance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

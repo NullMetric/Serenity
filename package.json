@@ -1,0 +1,14 @@
+{
+  "name": "serenity-mental-health-companion",
+  "version": "1.0.0",
+  "description": "Launch-ready Serenity mental wellness MVP with Gemini-powered support chat.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
