@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: serenity
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: ""
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: SITE_NAME
+        value: Serenity
+      - key: SUPPORT_EMAIL
+        value: support@example.com
+      - key: GEMINI_API_KEY
+        sync: false

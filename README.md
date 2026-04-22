@@ -43,6 +43,16 @@ This app is designed to deploy easily on platforms like Render, Railway, Fly.io,
 3. Set `GEMINI_API_KEY` in the platform environment settings
 4. Start command: `npm start`
 
+### Render
+
+This repo includes `render.yaml`, so Render can read the service settings automatically.
+
+1. Open Render and choose `New +` -> `Blueprint`
+2. Connect the GitHub repo
+3. Select `NullMetric/Serenity`
+4. Add the secret env var `GEMINI_API_KEY`
+5. Deploy
+
 ## Important Safety Notes
 
 - Serenity is not a substitute for licensed mental health care
